@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ASPNETDB" Class="PicRankDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.\SQLEXPRESS;AttachDbFilename=|DataDirectory|\ASPNETDB.MDF;Integrated Security=True;User Instance=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ASPNETDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.DataSets" Member="DataSets">
+    <Type Name="DataSet">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FolderPath" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="PicCoutn" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="DataSet_Picture" Member="Pictures" ThisKey="Id" OtherKey="DataSetId" Type="Picture" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GameParticipants" Member="GameParticipants">
+    <Type Name="GameParticipant">
+      <Column Name="GameId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PictureId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IsWinner" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Association Name="Game_GameParticipant" Member="Game" ThisKey="GameId" OtherKey="Id" Type="Game" IsForeignKey="true" />
+      <Association Name="Picture_GameParticipant" Member="Picture" ThisKey="PictureId" OtherKey="Id" Type="Picture" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Games" Member="Games">
+    <Type Name="Game">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BasePicId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="GameDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Game_GameParticipant" Member="GameParticipants" ThisKey="Id" OtherKey="GameId" Type="GameParticipant" />
+      <Association Name="Picture_Game" Member="Picture" ThisKey="BasePicId" OtherKey="Id" Type="Picture" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pictures" Member="Pictures">
+    <Type Name="Picture">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DataSetId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="FullPath" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Association Name="Picture_GameParticipant" Member="GameParticipants" ThisKey="Id" OtherKey="PictureId" Type="GameParticipant" />
+      <Association Name="Picture_Game" Member="Games" ThisKey="Id" OtherKey="BasePicId" Type="Game" />
+      <Association Name="Picture_Ranking" Member="Rankings" ThisKey="Id" OtherKey="PicId" Type="Ranking" />
+      <Association Name="DataSet_Picture" Member="DataSet" ThisKey="DataSetId" OtherKey="Id" Type="DataSet" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ranking" Member="Rankings">
+    <Type Name="Ranking">
+      <Column Name="BasePicId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PicId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PlayedGames" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Wins" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Losses" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Draws" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Score" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Picture_Ranking" Member="Picture" ThisKey="PicId" OtherKey="Id" Type="Picture" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,29 @@
+﻿@model PicRank.Web.Models.DataSet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="message">
+    @ViewBag.Message
+</div>
+
+<fieldset>
+    <legend>DataSet</legend>
+
+    <div class="display-label">Name</div>
+    <div class="display-field">@Model.Name</div>
+
+    <div class="display-label">FolderPath</div>
+    <div class="display-field">@Model.FolderPath</div>
+
+    <div class="display-label">PicCoutn</div>
+    <div class="display-field">@Model.PicCoutn</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
