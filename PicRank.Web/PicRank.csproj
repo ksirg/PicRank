@@ -63,11 +63,13 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DataSetsController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\MainPicWithList.cs" />
     <Compile Include="Models\PicRankDB.cs">
       <DependentUpon>PicRankDB.dbml</DependentUpon>
     </Compile>
@@ -76,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PicRankDB.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\PictureView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,7 +150,10 @@
     </None>
     <Content Include="Views\DataSets\Create.cshtml" />
     <Content Include="Views\DataSets\Details.cshtml" />
+    <Content Include="Views\Game\Playttt.cshtml" />
+    <Content Include="Views\DataSets\Edit.cshtml" />
     <Content Include="Views\DataSets\Index.cshtml" />
+    <Content Include="Views\Game\Play.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

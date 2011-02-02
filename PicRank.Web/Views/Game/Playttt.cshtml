@@ -1,0 +1,28 @@
+﻿@model IEnumerable<PicRank.Web.Models.PictureView>
+
+@{
+    ViewBag.Title = "Play";
+}
+
+<h2>Play</h2>
+          <img src="@Model.First().FullPath" alt="picture @Model.First().Id"  width="200px"/>
+
+<table>
+    <tr>
+        <th></th>
+        <th>
+            FullPath
+        </th>
+    </tr>
+
+@foreach (int i=1; i<Model item in Model) {
+    <tr>
+    <td>Obrazek @item.Id</td>
+        <td>
+          <img src="@item.FullPath" alt="picture @item.Id"  />
+        </td>
+    </tr>
+}
+
+</table>
+

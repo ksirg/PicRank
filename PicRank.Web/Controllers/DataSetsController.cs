@@ -24,7 +24,7 @@ namespace PicRank.Web.Controllers
             PicRankDBDataContext ctx = new PicRankDBDataContext();
 
             var picSet = (from ds in ctx.DataSets
-                          orderby ds.Id
+                          orderby ds.Active descending, ds.Id 
                           select ds).ToList();
             return View(picSet);
         }
@@ -65,7 +65,7 @@ namespace PicRank.Web.Controllers
             var dataSetName =collection.Get("name");
             picSet.Name = dataSetName;
 
-
+          
 
             try
             {
@@ -75,38 +75,38 @@ namespace PicRank.Web.Controllers
                 if (!ModelState.IsValid)
                     return View(picSet);
 
-
-
                 // TODO: Add insert logic here
-                var destinationFolder = Server.MapPath("/DataSets");
+                var datasetRepository = "DataSets";
+
+                var virtulaDs = VirtualPathUtility.GetDirectory("~/");
+
+                var destinationFolder = Path.Combine(Server.MapPath("~/"), datasetRepository);
+                    //Server.MapPath(datasetRepository);
+                //var ma = Server.MapPath("~/");
+
                 var postedFile = Request.Files["datafile"];
                 if (Path.GetExtension(postedFile.FileName) != ".zip")
                 {
                     throw new NotSupportedException("Przyjmuję tylko pliki .zip");
                 }
 
-
-
-                var datasetFolder = Path.Combine(destinationFolder, dataSetName);
+                var diskFolder = Path.Combine(destinationFolder, dataSetName);
                     //string.Format("{0}/{1}",destinationFolder,dataSetName);
 
-                var fileName = Path.Combine(datasetFolder, postedFile.FileName);
+                var fileName = Path.Combine(diskFolder, postedFile.FileName);
                     //string.Format("{0}/{1}", datasetFolder, postedFile.FileName);
-
-
 
                 if (postedFile.ContentLength > 0)
                 {
-                    Directory.CreateDirectory(datasetFolder);
+                    Directory.CreateDirectory(diskFolder);
                        
                     postedFile.SaveAs(fileName);
 
-
-                    picSet.FolderPath = datasetFolder;
+                    picSet.FolderPath = diskFolder;
 
                     List<Picture> pictures = new List<Picture>();
                     string zipToUnpack =fileName ;
-                    string unpackDirectory = datasetFolder;
+                    string unpackDirectory = diskFolder;
                     using (ZipFile zip1 = ZipFile.Read(zipToUnpack))
                     {
                         // here, we extract every entry, but we could extract conditionally
@@ -128,7 +128,10 @@ namespace PicRank.Web.Controllers
                                 continue;
                             }
 
-                            picSet.Pictures.Add(new Picture { FullPath = zipItemFile, Name = zipItem.FileName });
+
+                            string picRelativePath = string.Format("{0}/{1}/{2}", datasetRepository, dataSetName, zipItem.FileName);
+                                //Path.Combine( datasetRepository,dataSetName,zipItem.FileName);
+                            picSet.Pictures.Add(new Picture { FullPath =picRelativePath , Name = zipItem.FileName });
 
                         }
                         picSet.PicCoutn = picCount;
@@ -153,7 +156,14 @@ namespace PicRank.Web.Controllers
  
         public ActionResult Edit(int id)
         {
-            return View();
+
+            PicRankDBDataContext ctx = new PicRankDBDataContext();
+
+            var ds = (from t in ctx.DataSets
+                      where t.Id == id
+                      select t).SingleOrDefault();
+            
+            return View(ds);
         }
 
         //
@@ -164,8 +174,18 @@ namespace PicRank.Web.Controllers
         {
             try
             {
-                // TODO: Add update logic here
- 
+                PicRankDBDataContext ctx = new PicRankDBDataContext();
+
+                var ds = (from t in ctx.DataSets
+                          where t.Id == id
+                          select t).SingleOrDefault();
+
+
+                ds.Name = collection["name"];
+                ds.Active = Convert.ToBoolean(collection["active"]);
+
+                ctx.SubmitChanges();
+
                 return RedirectToAction("Index");
             }
             catch

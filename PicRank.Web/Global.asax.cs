@@ -21,6 +21,13 @@ namespace PicRank.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    "Set", // Route name
+            //    "Set", // URL with parameters
+            //    new { controller = "DataSets", action = "Index" } // Parameter defaults
+            //);
+
+
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters

@@ -1,0 +1,20 @@
+﻿@model PicRank.Web.Models.MainPicWithList
+
+@{
+    ViewBag.Title = "Play";
+}
+
+<h2>Play</h2>
+<div style="width:310px;min-height:150px;margin:2px auto;border:1px solid gray;text-align:center">
+<img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@Model.MainPicture.FullPath" alt="picture @Model.MainPicture.Id"  width="300px"/>
+</div>
+
+<p>Wybierz najbardziej podobne zdjęcie do powyższego</p>
+
+@foreach (var item in Model.Pictures){
+    <div style="float:left; width:300px;min-height:250px;margin:5px;border:1px solid gray;text-align:center">
+      <img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.FullPath" alt="picture @item.Id" width="270px" />
+    </div>
+}
+
+<div style="clear:both"></div>

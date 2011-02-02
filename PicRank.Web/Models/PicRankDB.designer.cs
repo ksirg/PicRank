@@ -30,9 +30,6 @@ namespace PicRank.Web.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertDataSet(DataSet instance);
-    partial void UpdateDataSet(DataSet instance);
-    partial void DeleteDataSet(DataSet instance);
     partial void InsertGameParticipant(GameParticipant instance);
     partial void UpdateGameParticipant(GameParticipant instance);
     partial void DeleteGameParticipant(GameParticipant instance);
@@ -45,6 +42,9 @@ namespace PicRank.Web.Models
     partial void InsertRanking(Ranking instance);
     partial void UpdateRanking(Ranking instance);
     partial void DeleteRanking(Ranking instance);
+    partial void InsertDataSet(DataSet instance);
+    partial void UpdateDataSet(DataSet instance);
+    partial void DeleteDataSet(DataSet instance);
     #endregion
 		
 		public PicRankDBDataContext() : 
@@ -75,14 +75,6 @@ namespace PicRank.Web.Models
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<DataSet> DataSets
-		{
-			get
-			{
-				return this.GetTable<DataSet>();
-			}
 		}
 		
 		public System.Data.Linq.Table<GameParticipant> GameParticipants
@@ -116,167 +108,20 @@ namespace PicRank.Web.Models
 				return this.GetTable<Ranking>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DataSets")]
-	public partial class DataSet : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Name;
-		
-		private string _FolderPath;
-		
-		private System.Nullable<int> _PicCoutn;
-		
-		private EntitySet<Picture> _Pictures;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnFolderPathChanging(string value);
-    partial void OnFolderPathChanged();
-    partial void OnPicCoutnChanging(System.Nullable<int> value);
-    partial void OnPicCoutnChanged();
-    #endregion
-		
-		public DataSet()
-		{
-			this._Pictures = new EntitySet<Picture>(new Action<Picture>(this.attach_Pictures), new Action<Picture>(this.detach_Pictures));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public System.Data.Linq.Table<DataSet> DataSets
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
+				return this.GetTable<DataSet>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(200)")]
-		public string Name
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.RandomPictures")]
+		public ISingleResult<RandomPicturesResult> RandomPictures([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> picCount)
 		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderPath", DbType="VarChar(300)")]
-		public string FolderPath
-		{
-			get
-			{
-				return this._FolderPath;
-			}
-			set
-			{
-				if ((this._FolderPath != value))
-				{
-					this.OnFolderPathChanging(value);
-					this.SendPropertyChanging();
-					this._FolderPath = value;
-					this.SendPropertyChanged("FolderPath");
-					this.OnFolderPathChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PicCoutn", DbType="Int")]
-		public System.Nullable<int> PicCoutn
-		{
-			get
-			{
-				return this._PicCoutn;
-			}
-			set
-			{
-				if ((this._PicCoutn != value))
-				{
-					this.OnPicCoutnChanging(value);
-					this.SendPropertyChanging();
-					this._PicCoutn = value;
-					this.SendPropertyChanged("PicCoutn");
-					this.OnPicCoutnChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataSet_Picture", Storage="_Pictures", ThisKey="Id", OtherKey="DataSetId")]
-		public EntitySet<Picture> Pictures
-		{
-			get
-			{
-				return this._Pictures;
-			}
-			set
-			{
-				this._Pictures.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Pictures(Picture entity)
-		{
-			this.SendPropertyChanging();
-			entity.DataSet = this;
-		}
-		
-		private void detach_Pictures(Picture entity)
-		{
-			this.SendPropertyChanging();
-			entity.DataSet = null;
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), picCount);
+			return ((ISingleResult<RandomPicturesResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1153,6 +998,236 @@ namespace PicRank.Web.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DataSets")]
+	public partial class DataSet : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private string _FolderPath;
+		
+		private System.Nullable<int> _PicCoutn;
+		
+		private System.Nullable<bool> _Active;
+		
+		private EntitySet<Picture> _Pictures;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnFolderPathChanging(string value);
+    partial void OnFolderPathChanged();
+    partial void OnPicCoutnChanging(System.Nullable<int> value);
+    partial void OnPicCoutnChanged();
+    partial void OnActiveChanging(System.Nullable<bool> value);
+    partial void OnActiveChanged();
+    #endregion
+		
+		public DataSet()
+		{
+			this._Pictures = new EntitySet<Picture>(new Action<Picture>(this.attach_Pictures), new Action<Picture>(this.detach_Pictures));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(200)")]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderPath", DbType="VarChar(300)")]
+		public string FolderPath
+		{
+			get
+			{
+				return this._FolderPath;
+			}
+			set
+			{
+				if ((this._FolderPath != value))
+				{
+					this.OnFolderPathChanging(value);
+					this.SendPropertyChanging();
+					this._FolderPath = value;
+					this.SendPropertyChanged("FolderPath");
+					this.OnFolderPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PicCoutn", DbType="Int")]
+		public System.Nullable<int> PicCoutn
+		{
+			get
+			{
+				return this._PicCoutn;
+			}
+			set
+			{
+				if ((this._PicCoutn != value))
+				{
+					this.OnPicCoutnChanging(value);
+					this.SendPropertyChanging();
+					this._PicCoutn = value;
+					this.SendPropertyChanged("PicCoutn");
+					this.OnPicCoutnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Active", DbType="Bit")]
+		public System.Nullable<bool> Active
+		{
+			get
+			{
+				return this._Active;
+			}
+			set
+			{
+				if ((this._Active != value))
+				{
+					this.OnActiveChanging(value);
+					this.SendPropertyChanging();
+					this._Active = value;
+					this.SendPropertyChanged("Active");
+					this.OnActiveChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DataSet_Picture", Storage="_Pictures", ThisKey="Id", OtherKey="DataSetId")]
+		public EntitySet<Picture> Pictures
+		{
+			get
+			{
+				return this._Pictures;
+			}
+			set
+			{
+				this._Pictures.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Pictures(Picture entity)
+		{
+			this.SendPropertyChanging();
+			entity.DataSet = this;
+		}
+		
+		private void detach_Pictures(Picture entity)
+		{
+			this.SendPropertyChanging();
+			entity.DataSet = null;
+		}
+	}
+	
+	public partial class RandomPicturesResult
+	{
+		
+		private int _Id;
+		
+		private string _FullPath;
+		
+		public RandomPicturesResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL")]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this._Id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FullPath", DbType="VarChar(300)")]
+		public string FullPath
+		{
+			get
+			{
+				return this._FullPath;
+			}
+			set
+			{
+				if ((this._FullPath != value))
+				{
+					this._FullPath = value;
+				}
 			}
 		}
 	}
