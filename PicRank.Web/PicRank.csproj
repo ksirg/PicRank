@@ -23,6 +23,28 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
+    <DeployIisAppPath>PicRank</DeployIisAppPath>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="ApplicationServices-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="dbFullSql" Enabled="True">
+            <PreSource Path="Data Source=.\SQLEXPRESS%3bAttachDbFilename=D:\UWM\doktorat\code\PicRank\PicRank.Web\App_Data\picrankdb.MDF%3bIntegrated Security=True%3bUser Instance=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Debug\AutoScripts\ApplicationServices-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="ASPNETDBConnectionString-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="dbFullSql">
+            <PreSource Path="Data Source=.\SQLEXPRESS%3bAttachDbFilename=|DataDirectory|\picrankdb.MDF%3bIntegrated Security=True%3bUser Instance=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" />
+            <Source Path="obj\Debug\AutoScripts\ASPNETDBConnectionString-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <PublishDatabases>true</PublishDatabases>
+    <DesktopBuildPackageLocation>..\deploy\PicRank.zip</DesktopBuildPackageLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -82,17 +104,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ASPNETDB.MDF" />
-    <Content Include="App_Data\aspnetdb_log.ldf">
-      <DependentUpon>ASPNETDB.MDF</DependentUpon>
+    <Content Include="App_Data\picrankdb.MDF" />
+    <Content Include="App_Data\picrankdb_log.ldf">
+      <DependentUpon>picrankdb.MDF</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\jquery-ui.css" />
@@ -140,7 +166,7 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DataSets\" />
+    <Folder Include="PicturesSets\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\PicRankDB.dbml">
@@ -154,6 +180,7 @@
     <Content Include="Views\DataSets\Edit.cshtml" />
     <Content Include="Views\DataSets\Index.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
+    <Content Include="Views\Game\Play2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
@@ -192,8 +219,7 @@
           </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://picrank.eastgroup.pl</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

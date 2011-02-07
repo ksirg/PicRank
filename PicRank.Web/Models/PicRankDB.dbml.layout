@@ -1,19 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 8.875" name="PicRankDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.25, 8.875" name="PicRankDB">
   <DataContextMoniker Name="/PicRankDBDataContext" />
   <nestedChildShapes>
-    <classShape Id="02b824ec-9dfb-40ea-9804-74055e62c72e" absoluteBounds="9, 2.5, 2, 1.3721775463223462">
-      <DataClassMoniker Name="/PicRankDBDataContext/GameParticipant" />
-      <nestedChildShapes>
-        <elementListCompartment Id="3e09ba09-20ed-428f-8fd9-377cd4519116" absoluteBounds="9.015, 2.96, 1.9700000000000002, 0.81217754632234573" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="a4d119b5-2c24-4e47-8c51-f41609a72181" absoluteBounds="7.875, 4.625, 2, 1.3721775463223462">
-      <DataClassMoniker Name="/PicRankDBDataContext/Game" />
-      <nestedChildShapes>
-        <elementListCompartment Id="ef4de0c4-3d11-41bd-8239-a51ccd43f3ef" absoluteBounds="7.89, 5.085, 1.9700000000000002, 0.81217754632234573" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" absoluteBounds="3.5, 3.625, 2, 1.5613420010606447">
       <DataClassMoniker Name="/PicRankDBDataContext/Picture" />
       <nestedChildShapes>
@@ -26,27 +14,6 @@
         <elementListCompartment Id="e6d5c64b-a58d-4e88-b208-1b0e35aa0778" absoluteBounds="6.265, 6.96, 1.9700000000000002, 1.5688353652755418" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(9.4375 : 4.625); (9.4375 : 3.87217754632235)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/PicRankDBDataContext/Game/Game_GameParticipant" />
-      <nodes>
-        <classShapeMoniker Id="a4d119b5-2c24-4e47-8c51-f41609a72181" />
-        <classShapeMoniker Id="02b824ec-9dfb-40ea-9804-74055e62c72e" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 4.24859127316117); (9.35416666666667 : 4.24859127316117 : JumpStart); (9.52083333333333 : 4.24859127316117 : JumpEnd); (10.46875 : 4.24859127316117); (10.46875 : 3.87217754632235)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_GameParticipant" />
-      <nodes>
-        <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />
-        <classShapeMoniker Id="02b824ec-9dfb-40ea-9804-74055e62c72e" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 4.90567100053032); (7.875 : 4.90567100053032)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_Game" />
-      <nodes>
-        <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />
-        <classShapeMoniker Id="a4d119b5-2c24-4e47-8c51-f41609a72181" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(4.1835934375 : 5.18634200106064); (4.1835934375 : 7.91658102096207); (6.25 : 7.91658102096207)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_Ranking" />
       <nodes>
@@ -60,11 +27,44 @@
         <elementListCompartment Id="e70f9a36-5616-4c70-9b0d-4db928a5d4e5" absoluteBounds="0.51500000000000012, 3.21, 1.9700000000000002, 1.1905064557989438" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 4.06275322789947); (3.5 : 4.06275322789947)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 4.06275322789947); (3.5 : 4.06275322789947)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PicRankDBDataContext/DataSet/DataSet_Picture" />
       <nodes>
         <classShapeMoniker Id="9ff00b03-88c3-4fbf-8545-3d5b34ab81bd" />
         <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="d729bb26-25fa-44dd-a0b9-59e930082197" absoluteBounds="10, 2.875, 2, 1.3721775463223458">
+      <DataClassMoniker Name="/PicRankDBDataContext/GameParticipant" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8ee58ec8-0a58-4253-acfe-39e75bb83052" absoluteBounds="10.015, 3.335, 1.9700000000000002, 0.81217754632234573" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 3.93608877316117); (10 : 3.93608877316117)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_GameParticipant" />
+      <nodes>
+        <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />
+        <classShapeMoniker Id="d729bb26-25fa-44dd-a0b9-59e930082197" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="655f2c50-5a77-456f-bc30-3766f0172c81" absoluteBounds="9, 5.375, 2, 1.5613420010606447">
+      <DataClassMoniker Name="/PicRankDBDataContext/Game" />
+      <nestedChildShapes>
+        <elementListCompartment Id="803a974a-ee43-4a34-9209-d44b8fe9cb74" absoluteBounds="9.015, 5.835, 1.9700000000000002, 1.0013420010606446" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.5 : 5.375); (10.5 : 4.24717754632235)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PicRankDBDataContext/Game/Game_GameParticipant" />
+      <nodes>
+        <classShapeMoniker Id="655f2c50-5a77-456f-bc30-3766f0172c81" />
+        <classShapeMoniker Id="d729bb26-25fa-44dd-a0b9-59e930082197" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 4.7480097736915); (9.46875 : 4.7480097736915); (9.46875 : 5.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_Game" />
+      <nodes>
+        <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />
+        <classShapeMoniker Id="655f2c50-5a77-456f-bc30-3766f0172c81" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

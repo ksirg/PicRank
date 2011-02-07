@@ -1,0 +1,19 @@
+﻿@model PicRank.Web.Models.GameView
+
+@{
+    ViewBag.Title = "Play";
+}
+
+<h2>Play</h2>
+
+<fieldset>
+    <legend>GameView</legend>
+
+    <div class="display-label">GameId</div>
+    <div class="display-field">@Model.GameId</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

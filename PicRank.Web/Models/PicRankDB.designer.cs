@@ -22,7 +22,7 @@ namespace PicRank.Web.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="ASPNETDB")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="picrankdb")]
 	public partial class PicRankDBDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -30,12 +30,6 @@ namespace PicRank.Web.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertGameParticipant(GameParticipant instance);
-    partial void UpdateGameParticipant(GameParticipant instance);
-    partial void DeleteGameParticipant(GameParticipant instance);
-    partial void InsertGame(Game instance);
-    partial void UpdateGame(Game instance);
-    partial void DeleteGame(Game instance);
     partial void InsertPicture(Picture instance);
     partial void UpdatePicture(Picture instance);
     partial void DeletePicture(Picture instance);
@@ -45,10 +39,16 @@ namespace PicRank.Web.Models
     partial void InsertDataSet(DataSet instance);
     partial void UpdateDataSet(DataSet instance);
     partial void DeleteDataSet(DataSet instance);
+    partial void InsertGameParticipant(GameParticipant instance);
+    partial void UpdateGameParticipant(GameParticipant instance);
+    partial void DeleteGameParticipant(GameParticipant instance);
+    partial void InsertGame(Game instance);
+    partial void UpdateGame(Game instance);
+    partial void DeleteGame(Game instance);
     #endregion
 		
 		public PicRankDBDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ASPNETDBConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["picrankdbConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -77,22 +77,6 @@ namespace PicRank.Web.Models
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<GameParticipant> GameParticipants
-		{
-			get
-			{
-				return this.GetTable<GameParticipant>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Game> Games
-		{
-			get
-			{
-				return this.GetTable<Game>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Picture> Pictures
 		{
 			get
@@ -117,382 +101,27 @@ namespace PicRank.Web.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<GameParticipant> GameParticipants
+		{
+			get
+			{
+				return this.GetTable<GameParticipant>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Game> Games
+		{
+			get
+			{
+				return this.GetTable<Game>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.RandomPictures")]
 		public ISingleResult<RandomPicturesResult> RandomPictures([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> picCount)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), picCount);
 			return ((ISingleResult<RandomPicturesResult>)(result.ReturnValue));
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.GameParticipants")]
-	public partial class GameParticipant : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _GameId;
-		
-		private int _PictureId;
-		
-		private byte _IsWinner;
-		
-		private EntityRef<Game> _Game;
-		
-		private EntityRef<Picture> _Picture;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnGameIdChanging(int value);
-    partial void OnGameIdChanged();
-    partial void OnPictureIdChanging(int value);
-    partial void OnPictureIdChanged();
-    partial void OnIsWinnerChanging(byte value);
-    partial void OnIsWinnerChanged();
-    #endregion
-		
-		public GameParticipant()
-		{
-			this._Game = default(EntityRef<Game>);
-			this._Picture = default(EntityRef<Picture>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int GameId
-		{
-			get
-			{
-				return this._GameId;
-			}
-			set
-			{
-				if ((this._GameId != value))
-				{
-					if (this._Game.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnGameIdChanging(value);
-					this.SendPropertyChanging();
-					this._GameId = value;
-					this.SendPropertyChanged("GameId");
-					this.OnGameIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PictureId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int PictureId
-		{
-			get
-			{
-				return this._PictureId;
-			}
-			set
-			{
-				if ((this._PictureId != value))
-				{
-					if (this._Picture.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPictureIdChanging(value);
-					this.SendPropertyChanging();
-					this._PictureId = value;
-					this.SendPropertyChanged("PictureId");
-					this.OnPictureIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWinner", DbType="TinyInt NOT NULL")]
-		public byte IsWinner
-		{
-			get
-			{
-				return this._IsWinner;
-			}
-			set
-			{
-				if ((this._IsWinner != value))
-				{
-					this.OnIsWinnerChanging(value);
-					this.SendPropertyChanging();
-					this._IsWinner = value;
-					this.SendPropertyChanged("IsWinner");
-					this.OnIsWinnerChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Game_GameParticipant", Storage="_Game", ThisKey="GameId", OtherKey="Id", IsForeignKey=true)]
-		public Game Game
-		{
-			get
-			{
-				return this._Game.Entity;
-			}
-			set
-			{
-				Game previousValue = this._Game.Entity;
-				if (((previousValue != value) 
-							|| (this._Game.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Game.Entity = null;
-						previousValue.GameParticipants.Remove(this);
-					}
-					this._Game.Entity = value;
-					if ((value != null))
-					{
-						value.GameParticipants.Add(this);
-						this._GameId = value.Id;
-					}
-					else
-					{
-						this._GameId = default(int);
-					}
-					this.SendPropertyChanged("Game");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_GameParticipant", Storage="_Picture", ThisKey="PictureId", OtherKey="Id", IsForeignKey=true)]
-		public Picture Picture
-		{
-			get
-			{
-				return this._Picture.Entity;
-			}
-			set
-			{
-				Picture previousValue = this._Picture.Entity;
-				if (((previousValue != value) 
-							|| (this._Picture.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Picture.Entity = null;
-						previousValue.GameParticipants.Remove(this);
-					}
-					this._Picture.Entity = value;
-					if ((value != null))
-					{
-						value.GameParticipants.Add(this);
-						this._PictureId = value.Id;
-					}
-					else
-					{
-						this._PictureId = default(int);
-					}
-					this.SendPropertyChanged("Picture");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Games")]
-	public partial class Game : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private System.Nullable<int> _BasePicId;
-		
-		private System.Nullable<System.DateTime> _GameDate;
-		
-		private EntitySet<GameParticipant> _GameParticipants;
-		
-		private EntityRef<Picture> _Picture;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnBasePicIdChanging(System.Nullable<int> value);
-    partial void OnBasePicIdChanged();
-    partial void OnGameDateChanging(System.Nullable<System.DateTime> value);
-    partial void OnGameDateChanged();
-    #endregion
-		
-		public Game()
-		{
-			this._GameParticipants = new EntitySet<GameParticipant>(new Action<GameParticipant>(this.attach_GameParticipants), new Action<GameParticipant>(this.detach_GameParticipants));
-			this._Picture = default(EntityRef<Picture>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BasePicId", DbType="Int")]
-		public System.Nullable<int> BasePicId
-		{
-			get
-			{
-				return this._BasePicId;
-			}
-			set
-			{
-				if ((this._BasePicId != value))
-				{
-					if (this._Picture.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnBasePicIdChanging(value);
-					this.SendPropertyChanging();
-					this._BasePicId = value;
-					this.SendPropertyChanged("BasePicId");
-					this.OnBasePicIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameDate", DbType="DateTime")]
-		public System.Nullable<System.DateTime> GameDate
-		{
-			get
-			{
-				return this._GameDate;
-			}
-			set
-			{
-				if ((this._GameDate != value))
-				{
-					this.OnGameDateChanging(value);
-					this.SendPropertyChanging();
-					this._GameDate = value;
-					this.SendPropertyChanged("GameDate");
-					this.OnGameDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Game_GameParticipant", Storage="_GameParticipants", ThisKey="Id", OtherKey="GameId")]
-		public EntitySet<GameParticipant> GameParticipants
-		{
-			get
-			{
-				return this._GameParticipants;
-			}
-			set
-			{
-				this._GameParticipants.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_Game", Storage="_Picture", ThisKey="BasePicId", OtherKey="Id", IsForeignKey=true)]
-		public Picture Picture
-		{
-			get
-			{
-				return this._Picture.Entity;
-			}
-			set
-			{
-				Picture previousValue = this._Picture.Entity;
-				if (((previousValue != value) 
-							|| (this._Picture.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Picture.Entity = null;
-						previousValue.Games.Remove(this);
-					}
-					this._Picture.Entity = value;
-					if ((value != null))
-					{
-						value.Games.Add(this);
-						this._BasePicId = value.Id;
-					}
-					else
-					{
-						this._BasePicId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Picture");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_GameParticipants(GameParticipant entity)
-		{
-			this.SendPropertyChanging();
-			entity.Game = this;
-		}
-		
-		private void detach_GameParticipants(GameParticipant entity)
-		{
-			this.SendPropertyChanging();
-			entity.Game = null;
 		}
 	}
 	
@@ -510,11 +139,11 @@ namespace PicRank.Web.Models
 		
 		private string _FullPath;
 		
+		private EntitySet<Ranking> _Rankings;
+		
 		private EntitySet<GameParticipant> _GameParticipants;
 		
 		private EntitySet<Game> _Games;
-		
-		private EntitySet<Ranking> _Rankings;
 		
 		private EntityRef<DataSet> _DataSet;
 		
@@ -534,9 +163,9 @@ namespace PicRank.Web.Models
 		
 		public Picture()
 		{
+			this._Rankings = new EntitySet<Ranking>(new Action<Ranking>(this.attach_Rankings), new Action<Ranking>(this.detach_Rankings));
 			this._GameParticipants = new EntitySet<GameParticipant>(new Action<GameParticipant>(this.attach_GameParticipants), new Action<GameParticipant>(this.detach_GameParticipants));
 			this._Games = new EntitySet<Game>(new Action<Game>(this.attach_Games), new Action<Game>(this.detach_Games));
-			this._Rankings = new EntitySet<Ranking>(new Action<Ranking>(this.attach_Rankings), new Action<Ranking>(this.detach_Rankings));
 			this._DataSet = default(EntityRef<DataSet>);
 			OnCreated();
 		}
@@ -625,6 +254,19 @@ namespace PicRank.Web.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_Ranking", Storage="_Rankings", ThisKey="Id", OtherKey="PicId")]
+		public EntitySet<Ranking> Rankings
+		{
+			get
+			{
+				return this._Rankings;
+			}
+			set
+			{
+				this._Rankings.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_GameParticipant", Storage="_GameParticipants", ThisKey="Id", OtherKey="PictureId")]
 		public EntitySet<GameParticipant> GameParticipants
 		{
@@ -648,19 +290,6 @@ namespace PicRank.Web.Models
 			set
 			{
 				this._Games.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_Ranking", Storage="_Rankings", ThisKey="Id", OtherKey="PicId")]
-		public EntitySet<Ranking> Rankings
-		{
-			get
-			{
-				return this._Rankings;
-			}
-			set
-			{
-				this._Rankings.Assign(value);
 			}
 		}
 		
@@ -718,6 +347,18 @@ namespace PicRank.Web.Models
 			}
 		}
 		
+		private void attach_Rankings(Ranking entity)
+		{
+			this.SendPropertyChanging();
+			entity.Picture = this;
+		}
+		
+		private void detach_Rankings(Ranking entity)
+		{
+			this.SendPropertyChanging();
+			entity.Picture = null;
+		}
+		
 		private void attach_GameParticipants(GameParticipant entity)
 		{
 			this.SendPropertyChanging();
@@ -737,18 +378,6 @@ namespace PicRank.Web.Models
 		}
 		
 		private void detach_Games(Game entity)
-		{
-			this.SendPropertyChanging();
-			entity.Picture = null;
-		}
-		
-		private void attach_Rankings(Ranking entity)
-		{
-			this.SendPropertyChanging();
-			entity.Picture = this;
-		}
-		
-		private void detach_Rankings(Ranking entity)
 		{
 			this.SendPropertyChanging();
 			entity.Picture = null;
@@ -1185,6 +814,401 @@ namespace PicRank.Web.Models
 		{
 			this.SendPropertyChanging();
 			entity.DataSet = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.GameParticipants")]
+	public partial class GameParticipant : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _GameId;
+		
+		private int _PictureId;
+		
+		private bool _IsWinner;
+		
+		private EntityRef<Picture> _Picture;
+		
+		private EntityRef<Game> _Game;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnGameIdChanging(int value);
+    partial void OnGameIdChanged();
+    partial void OnPictureIdChanging(int value);
+    partial void OnPictureIdChanged();
+    partial void OnIsWinnerChanging(bool value);
+    partial void OnIsWinnerChanged();
+    #endregion
+		
+		public GameParticipant()
+		{
+			this._Picture = default(EntityRef<Picture>);
+			this._Game = default(EntityRef<Game>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int GameId
+		{
+			get
+			{
+				return this._GameId;
+			}
+			set
+			{
+				if ((this._GameId != value))
+				{
+					if (this._Game.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnGameIdChanging(value);
+					this.SendPropertyChanging();
+					this._GameId = value;
+					this.SendPropertyChanged("GameId");
+					this.OnGameIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PictureId", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int PictureId
+		{
+			get
+			{
+				return this._PictureId;
+			}
+			set
+			{
+				if ((this._PictureId != value))
+				{
+					if (this._Picture.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPictureIdChanging(value);
+					this.SendPropertyChanging();
+					this._PictureId = value;
+					this.SendPropertyChanged("PictureId");
+					this.OnPictureIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsWinner", DbType="Bit NOT NULL")]
+		public bool IsWinner
+		{
+			get
+			{
+				return this._IsWinner;
+			}
+			set
+			{
+				if ((this._IsWinner != value))
+				{
+					this.OnIsWinnerChanging(value);
+					this.SendPropertyChanging();
+					this._IsWinner = value;
+					this.SendPropertyChanged("IsWinner");
+					this.OnIsWinnerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_GameParticipant", Storage="_Picture", ThisKey="PictureId", OtherKey="Id", IsForeignKey=true)]
+		public Picture Picture
+		{
+			get
+			{
+				return this._Picture.Entity;
+			}
+			set
+			{
+				Picture previousValue = this._Picture.Entity;
+				if (((previousValue != value) 
+							|| (this._Picture.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Picture.Entity = null;
+						previousValue.GameParticipants.Remove(this);
+					}
+					this._Picture.Entity = value;
+					if ((value != null))
+					{
+						value.GameParticipants.Add(this);
+						this._PictureId = value.Id;
+					}
+					else
+					{
+						this._PictureId = default(int);
+					}
+					this.SendPropertyChanged("Picture");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Game_GameParticipant", Storage="_Game", ThisKey="GameId", OtherKey="Id", IsForeignKey=true)]
+		public Game Game
+		{
+			get
+			{
+				return this._Game.Entity;
+			}
+			set
+			{
+				Game previousValue = this._Game.Entity;
+				if (((previousValue != value) 
+							|| (this._Game.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Game.Entity = null;
+						previousValue.GameParticipants.Remove(this);
+					}
+					this._Game.Entity = value;
+					if ((value != null))
+					{
+						value.GameParticipants.Add(this);
+						this._GameId = value.Id;
+					}
+					else
+					{
+						this._GameId = default(int);
+					}
+					this.SendPropertyChanged("Game");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Games")]
+	public partial class Game : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _BasePicId;
+		
+		private System.Nullable<System.DateTime> _GameDate;
+		
+		private bool _IsFinished;
+		
+		private EntitySet<GameParticipant> _GameParticipants;
+		
+		private EntityRef<Picture> _Picture;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnBasePicIdChanging(System.Nullable<int> value);
+    partial void OnBasePicIdChanged();
+    partial void OnGameDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnGameDateChanged();
+    partial void OnIsFinishedChanging(bool value);
+    partial void OnIsFinishedChanged();
+    #endregion
+		
+		public Game()
+		{
+			this._GameParticipants = new EntitySet<GameParticipant>(new Action<GameParticipant>(this.attach_GameParticipants), new Action<GameParticipant>(this.detach_GameParticipants));
+			this._Picture = default(EntityRef<Picture>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BasePicId", DbType="Int")]
+		public System.Nullable<int> BasePicId
+		{
+			get
+			{
+				return this._BasePicId;
+			}
+			set
+			{
+				if ((this._BasePicId != value))
+				{
+					if (this._Picture.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnBasePicIdChanging(value);
+					this.SendPropertyChanging();
+					this._BasePicId = value;
+					this.SendPropertyChanged("BasePicId");
+					this.OnBasePicIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GameDate", DbType="DateTime")]
+		public System.Nullable<System.DateTime> GameDate
+		{
+			get
+			{
+				return this._GameDate;
+			}
+			set
+			{
+				if ((this._GameDate != value))
+				{
+					this.OnGameDateChanging(value);
+					this.SendPropertyChanging();
+					this._GameDate = value;
+					this.SendPropertyChanged("GameDate");
+					this.OnGameDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsFinished", DbType="Bit NOT NULL")]
+		public bool IsFinished
+		{
+			get
+			{
+				return this._IsFinished;
+			}
+			set
+			{
+				if ((this._IsFinished != value))
+				{
+					this.OnIsFinishedChanging(value);
+					this.SendPropertyChanging();
+					this._IsFinished = value;
+					this.SendPropertyChanged("IsFinished");
+					this.OnIsFinishedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Game_GameParticipant", Storage="_GameParticipants", ThisKey="Id", OtherKey="GameId")]
+		public EntitySet<GameParticipant> GameParticipants
+		{
+			get
+			{
+				return this._GameParticipants;
+			}
+			set
+			{
+				this._GameParticipants.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Picture_Game", Storage="_Picture", ThisKey="BasePicId", OtherKey="Id", IsForeignKey=true)]
+		public Picture Picture
+		{
+			get
+			{
+				return this._Picture.Entity;
+			}
+			set
+			{
+				Picture previousValue = this._Picture.Entity;
+				if (((previousValue != value) 
+							|| (this._Picture.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Picture.Entity = null;
+						previousValue.Games.Remove(this);
+					}
+					this._Picture.Entity = value;
+					if ((value != null))
+					{
+						value.Games.Add(this);
+						this._BasePicId = value.Id;
+					}
+					else
+					{
+						this._BasePicId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Picture");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_GameParticipants(GameParticipant entity)
+		{
+			this.SendPropertyChanging();
+			entity.Game = this;
+		}
+		
+		private void detach_GameParticipants(GameParticipant entity)
+		{
+			this.SendPropertyChanging();
+			entity.Game = null;
 		}
 	}
 	

@@ -76,7 +76,7 @@ namespace PicRank.Web.Controllers
                     return View(picSet);
 
                 // TODO: Add insert logic here
-                var datasetRepository = "DataSets";
+                var datasetRepository = "PicturesSets";
 
                 var virtulaDs = VirtualPathUtility.GetDirectory("~/");
 

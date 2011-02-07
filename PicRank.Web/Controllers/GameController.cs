@@ -22,25 +22,65 @@ namespace PicRank.Web.Controllers
 
             PicRankDBDataContext ctx = new PicRankDBDataContext();
 
-            var pictures = ctx.RandomPictures(1+8);
+            var pictures = ctx.RandomPictures(1 + 8);
 
-            MainPicWithList mainPicList = new MainPicWithList();
+            GameView gameView = new GameView();
+
+            Game game = new Game();
+
+            game.GameDate = DateTime.Now;
+
 
             bool hasMain = false;
             foreach (var item in pictures)
             {
                 if (!hasMain)
                 {
-                    mainPicList.MainPicture= new PictureView() { Id = item.Id, FullPath = item.FullPath };
+                    gameView.MainPicture = new PictureView() { Id = item.Id, FullPath = item.FullPath };
+                    //game main picture
+                    game.BasePicId = gameView.MainPicture.Id;
                     hasMain = true;
-                }else
-                    mainPicList.Pictures.Add(new PictureView() { Id = item.Id, FullPath = item.FullPath });
+                }
+                else
+                {
+                    //game participants
+                    game.GameParticipants.Add(new GameParticipant() { PictureId = item.Id });
+
+                    gameView.Pictures.Add(new PictureView() { Id = item.Id, FullPath = item.FullPath });
+                }
+
             }
 
+            //ctx.Games.InsertOnSubmit(game);
+            //ctx.SubmitChanges();
 
-            return View(mainPicList);
+            gameView.GameId = game.Id;
+
+            return View(gameView);
         }
 
+
+        public ActionResult Win(int gameId, int winnerId)
+        {
+
+            PicRankDBDataContext ctx = new PicRankDBDataContext();
+
+            var game = (from g in ctx.Games
+                        where g.Id == gameId
+                        select g).SingleOrDefault(); ;
+
+            game.IsFinished = true;
+
+            var participant = (from p in ctx.GameParticipants
+                               where p.GameId == gameId && p.PictureId == winnerId
+                               select p).SingleOrDefault();
+
+            participant.IsWinner = true;
+
+            ctx.SubmitChanges();
+
+            return RedirectToAction("Play"); //View(mainPicList);
+        }
 
         //
         // GET: /Game/Details/5
@@ -56,7 +96,7 @@ namespace PicRank.Web.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /Game/Create
@@ -75,10 +115,10 @@ namespace PicRank.Web.Controllers
                 return View();
             }
         }
-        
+
         //
         // GET: /Game/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             return View();
@@ -93,7 +133,7 @@ namespace PicRank.Web.Controllers
             try
             {
                 // TODO: Add update logic here
- 
+
                 return RedirectToAction("Index");
             }
             catch
@@ -104,7 +144,7 @@ namespace PicRank.Web.Controllers
 
         //
         // GET: /Game/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             return View();
@@ -119,7 +159,7 @@ namespace PicRank.Web.Controllers
             try
             {
                 // TODO: Add delete logic here
- 
+
                 return RedirectToAction("Index");
             }
             catch

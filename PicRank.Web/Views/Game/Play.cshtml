@@ -1,4 +1,4 @@
-﻿@model PicRank.Web.Models.MainPicWithList
+﻿@model PicRank.Web.Models.GameView
 
 @{
     ViewBag.Title = "Play";
@@ -12,8 +12,11 @@
 <p>Wybierz najbardziej podobne zdjęcie do powyższego</p>
 
 @foreach (var item in Model.Pictures){
-    <div style="float:left; width:300px;min-height:250px;margin:5px;border:1px solid gray;text-align:center">
-      <img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.FullPath" alt="picture @item.Id" width="270px" />
+    <div style="float:left; width:190px;min-height:180px;margin:5px;border:1px solid gray;text-align:center">
+     
+     <a href="@Url.Action("win", new { gameId = Model.GameId, winnerId = item.Id })" title="">
+      <img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.FullPath" alt="picture @item.Id" width="180px" />
+      </a>
     </div>
 }
 

@@ -27,6 +27,11 @@ namespace PicRank.Web
             //    new { controller = "DataSets", action = "Index" } // Parameter defaults
             //);
 
+            routes.MapRoute(
+               "Game", // Route name
+               "win/{gameId}/{winnerId}", // URL with parameters
+               new { controller = "Game", action = "Win" } // Parameter defaults
+           );
 
             routes.MapRoute(
                 "Default", // Route name
