@@ -17,28 +17,28 @@ namespace PicRank.Web.Controllers
         DataSetService dsService = new DataSetService();
         //
         // GET: /DataSets/
-
+        [Authorize]
         public ActionResult Index()
         {
 
             PicRankDBDataContext ctx = new PicRankDBDataContext();
 
             var picSet = (from ds in ctx.DataSets
-                          orderby ds.Active descending, ds.Id 
+                          orderby ds.Active descending, ds.Id
                           select ds).ToList();
             return View(picSet);
         }
 
         //
         // GET: /DataSets/Details/5
-
+        [Authorize]
         public ActionResult Details(int id)
         {
-             PicRankDBDataContext ctx = new PicRankDBDataContext();
-            
+            PicRankDBDataContext ctx = new PicRankDBDataContext();
+
             var picSet = (from ds in ctx.DataSets
-                         where ds.Id==id
-                             select ds).SingleOrDefault();
+                          where ds.Id == id
+                          select ds).SingleOrDefault();
 
             return View(picSet);
         }
@@ -49,9 +49,9 @@ namespace PicRank.Web.Controllers
         [Authorize]
         public ActionResult Create()
         {
-           
+
             return View();
-        } 
+        }
 
         //
         // POST: /DataSets/Create
@@ -62,10 +62,10 @@ namespace PicRank.Web.Controllers
         {
 
             DataSet picSet = new DataSet();
-            var dataSetName =collection.Get("name");
+            var dataSetName = collection.Get("name");
             picSet.Name = dataSetName;
 
-          
+
 
             try
             {
@@ -81,7 +81,7 @@ namespace PicRank.Web.Controllers
                 var virtulaDs = VirtualPathUtility.GetDirectory("~/");
 
                 var destinationFolder = Path.Combine(Server.MapPath("~/"), datasetRepository);
-                    //Server.MapPath(datasetRepository);
+                //Server.MapPath(datasetRepository);
                 //var ma = Server.MapPath("~/");
 
                 var postedFile = Request.Files["datafile"];
@@ -91,35 +91,35 @@ namespace PicRank.Web.Controllers
                 }
 
                 var diskFolder = Path.Combine(destinationFolder, dataSetName);
-                    //string.Format("{0}/{1}",destinationFolder,dataSetName);
+                //string.Format("{0}/{1}",destinationFolder,dataSetName);
 
                 var fileName = Path.Combine(diskFolder, postedFile.FileName);
-                    //string.Format("{0}/{1}", datasetFolder, postedFile.FileName);
+                //string.Format("{0}/{1}", datasetFolder, postedFile.FileName);
 
                 if (postedFile.ContentLength > 0)
                 {
                     Directory.CreateDirectory(diskFolder);
-                       
+
                     postedFile.SaveAs(fileName);
 
                     picSet.FolderPath = diskFolder;
 
                     List<Picture> pictures = new List<Picture>();
-                    string zipToUnpack =fileName ;
+                    string zipToUnpack = fileName;
                     string unpackDirectory = diskFolder;
                     using (ZipFile zip1 = ZipFile.Read(zipToUnpack))
                     {
                         // here, we extract every entry, but we could extract conditionally
                         // based on entry name, size, date, checkbox status, etc.  
-                    int picCount=0;
+                        int picCount = 0;
                         foreach (ZipEntry zipItem in zip1)
                         {
                             //zipItem.InputStream
-                            
+
                             zipItem.Extract(unpackDirectory, ExtractExistingFileAction.OverwriteSilently);
                             picCount++;
                             string zipItemFile = Path.Combine(unpackDirectory, zipItem.FileName);
-                                //string.Format("{0}/{1}", unpackDirectory,zipItem.FileName);
+                            //string.Format("{0}/{1}", unpackDirectory,zipItem.FileName);
                             var isImg = PictureHelpers.IsValidImage(zipItemFile);
                             if (!isImg)
                             {
@@ -130,8 +130,8 @@ namespace PicRank.Web.Controllers
 
 
                             string picRelativePath = string.Format("{0}/{1}/{2}", datasetRepository, dataSetName, zipItem.FileName);
-                                //Path.Combine( datasetRepository,dataSetName,zipItem.FileName);
-                            picSet.Pictures.Add(new Picture { FullPath =picRelativePath , Name = zipItem.FileName });
+                            //Path.Combine( datasetRepository,dataSetName,zipItem.FileName);
+                            picSet.Pictures.Add(new Picture { FullPath = picRelativePath, Name = zipItem.FileName });
 
                         }
                         picSet.PicCoutn = picCount;
@@ -144,16 +144,16 @@ namespace PicRank.Web.Controllers
                 }
                 return RedirectToAction("Details", new { id = picSet.Id });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ModelState.AddModelError("datafile", ex.Message);
                 return View(picSet);
             }
         }
-        
+
         //
         // GET: /DataSets/Edit/5
- 
+        [Authorize]
         public ActionResult Edit(int id)
         {
 
@@ -162,13 +162,13 @@ namespace PicRank.Web.Controllers
             var ds = (from t in ctx.DataSets
                       where t.Id == id
                       select t).SingleOrDefault();
-            
+
             return View(ds);
         }
 
         //
         // POST: /DataSets/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -196,7 +196,7 @@ namespace PicRank.Web.Controllers
 
         //
         // GET: /DataSets/Delete/5
- 
+        [Authorize]
         public ActionResult Delete(int id)
         {
             return View();
@@ -204,14 +204,14 @@ namespace PicRank.Web.Controllers
 
         //
         // POST: /DataSets/Delete/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
- 
+
                 return RedirectToAction("Index");
             }
             catch
