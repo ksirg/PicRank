@@ -1,0 +1,32 @@
+﻿
+
+.picRow
+{
+    clear: both;
+    text-align: center;
+    margin:3px;
+}
+
+.bigButton
+{
+    font-size: 1em;
+}
+
+.picBox
+{
+    width: 190px;
+    min-height: 180px;
+    margin: 5px;
+    border: 1px solid gray;
+    text-align: center;
+    display: inline-table;
+}
+
+.picBox img 
+{
+    border: none;
+}
+#mainPic 
+{
+    font-size: 2em;
+}

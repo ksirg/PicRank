@@ -22,7 +22,7 @@ namespace PicRank.Web.Controllers
 
             PicRankDBDataContext ctx = new PicRankDBDataContext();
 
-            var pictures = ctx.RandomPictures(1 + 8);
+            var pictures = ctx.RandomPictures(1 + 12);
 
             GameView gameView = new GameView();
 
@@ -51,10 +51,18 @@ namespace PicRank.Web.Controllers
 
             }
 
-            //ctx.Games.InsertOnSubmit(game);
-            //ctx.SubmitChanges();
+            ctx.Games.InsertOnSubmit(game);
+            ctx.SubmitChanges();
 
             gameView.GameId = game.Id;
+
+            //only for test
+            //if (gameView.MainPicture == null)
+            //    gameView.MainPicture = new PictureView() { FullPath = @"http://picrank.eastgroup.pl/PicturesSets/pierscionki/image_2702399.jpg", Id = 123 };
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    gameView.Pictures.Add(gameView.MainPicture);
+            //}
 
             return View(gameView);
         }

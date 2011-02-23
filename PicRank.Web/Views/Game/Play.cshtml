@@ -1,23 +1,38 @@
 ﻿@model PicRank.Web.Models.GameView
-
 @{
     ViewBag.Title = "Play";
 }
 
-<h2>Play</h2>
-<div style="width:310px;min-height:150px;margin:2px auto;border:1px solid gray;text-align:center">
-<img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@Model.MainPicture.FullPath" alt="picture @Model.MainPicture.Id"  width="300px"/>
-</div>
+<div id="mainPic">
+    <img style="margin:5px 20px;float:left" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@Model.MainPicture.FullPath" alt="picture @Model.MainPicture.Id"   width="220px"/>
 
-<p>Wybierz najbardziej podobne zdjęcie do powyższego</p>
-
-@foreach (var item in Model.Pictures){
-    <div style="float:left; width:190px;min-height:180px;margin:5px;border:1px solid gray;text-align:center">
-     
-     <a href="@Url.Action("win", new { gameId = Model.GameId, winnerId = item.Id })" title="">
-      <img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.FullPath" alt="picture @item.Id" width="180px" />
-      </a>
+<p>
+   Kliknij na najbardziej podobne zdjęcie do tego po lewej</p>
+    <form>
+    <p>Jeżeli nie ma podobnych to kilknij  <input class="bigButton" type="submit" value="Nastepne" /> </p>
+    </form>
     </div>
-}
+@{
+    for (int i = 0; i < Model.Pictures.Count; i++)
+    {
+        var item = Model.Pictures[i];
 
-<div style="clear:both"></div>
+        if (i % 6 == 0)
+        { 
+           @: <div class="picRow">
+        }
+
+        <div class="picBox" >
+            <a href="@Url.Action("win", new { gameId = Model.GameId, winnerId = item.Id })" title="">
+                <img style="margin:2px auto" src="@Request.Url.GetLeftPart(UriPartial.Authority)/@item.FullPath" alt="picture @item.Id" width="180px" />
+            </a>
+        </div>
+        
+       if( ((i+1)%6 ==0) || i==Model.Pictures.Count-1 ){
+        @: </div>
+        }
+
+    }
+}
+<div style="clear: both">
+</div>

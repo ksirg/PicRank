@@ -1,0 +1,14 @@
+SELECT   ISNULL(w.BasePicId, l.BasePicId) AS BasePicId, ISNULL(w.PictureId, l.PictureId) AS Pictureid, 
+	 ISNULL(w.Wins, 0) AS Wins, ISNULL(l.Loses, 0) AS Loses, 
+	(ISNULL(w.Wins, 0) + 0.0)/(ISNULL(w.Wins, 0) + ISNULL(l.Loses, 0)) AS Score
+FROM      (SELECT   g.BasePicId, gp.PictureId, COUNT(*) AS Wins
+                 FROM      Games AS g INNER JOIN
+                                 GameParticipants AS gp ON g.Id = gp.GameId
+                 WHERE   (gp.IsWinner = 1)
+                 GROUP BY g.BasePicId, gp.PictureId) AS w FULL OUTER JOIN
+                    (SELECT   g.BasePicId, gp.PictureId, COUNT(*) AS Loses
+                     FROM      Games AS g INNER JOIN
+                                     GameParticipants AS gp ON g.Id = gp.GameId
+                     WHERE   (gp.IsWinner = 0)
+                     GROUP BY g.BasePicId, gp.PictureId) AS l ON w.BasePicId = l.BasePicId AND w.PictureId = l.PictureId
+ORDER BY Score DESC

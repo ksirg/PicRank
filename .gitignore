@@ -31,3 +31,5 @@ Libs/DotNetZipLib-DevKit-v1.9.zip
 PicRank.Web/DataSets/*
 dane/*
 deploy/*
+PicRank.Web/PicturesSets/*
+PicRank.Web/PicRank.Publish.xml

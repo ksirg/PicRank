@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
     <DeployIisAppPath>PicRank</DeployIisAppPath>
     <PublishDatabaseSettings>
       <Objects>
@@ -43,8 +43,9 @@
         </ObjectGroup>
       </Objects>
     </PublishDatabaseSettings>
-    <PublishDatabases>true</PublishDatabases>
+    <PublishDatabases>false</PublishDatabases>
     <DesktopBuildPackageLocation>..\deploy\PicRank.zip</DesktopBuildPackageLocation>
+    <ExcludeApp_Data>true</ExcludeApp_Data>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -108,6 +109,7 @@
     <Content Include="App_Data\picrankdb_log.ldf">
       <DependentUpon>picrankdb.MDF</DependentUpon>
     </Content>
+    <Content Include="Content\custom.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -176,11 +178,9 @@
     </None>
     <Content Include="Views\DataSets\Create.cshtml" />
     <Content Include="Views\DataSets\Details.cshtml" />
-    <Content Include="Views\Game\Playttt.cshtml" />
     <Content Include="Views\DataSets\Edit.cshtml" />
     <Content Include="Views\DataSets\Index.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
-    <Content Include="Views\Game\Play2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
