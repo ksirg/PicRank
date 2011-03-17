@@ -13,7 +13,7 @@
 
         <div id="header">
             <div id="title">
-                <h1>PicRank</h1>
+                <h1> @Html.ActionLink("PicRank","Index","Home")</h1>
             </div>
 
             <div id="logindisplay">
@@ -29,6 +29,8 @@
                     { 
                     <li>@Html.ActionLink("New DataSet", "Create", "Datasets")</li>
                         <li>@Html.ActionLink("DataSets", "Index", "Datasets")</li>
+                        <li>@Html.ActionLink("Ranking", "Index", "Ranking")</li>
+                        
                     }
                     <li>@Html.ActionLink("Play", "Play", "Game")</li>
                 </ul>

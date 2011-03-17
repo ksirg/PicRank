@@ -5,14 +5,14 @@ using System.Web;
 
 namespace PicRank.Web.Models
 {
-    public class GameView
+    public class MainPicWithList
     {
         public int GameId { get; set; }
 
         public PictureView MainPicture { get; set; }
         public List<PictureView> Pictures { get; set; }
 
-        public GameView()
+        public MainPicWithList()
         {
             Pictures = new List<PictureView>(10);
         }

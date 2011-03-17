@@ -14,6 +14,7 @@
     <AssemblyName>PicRank.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +89,7 @@
     <Compile Include="Controllers\DataSetsController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -181,6 +183,8 @@
     <Content Include="Views\DataSets\Edit.cshtml" />
     <Content Include="Views\DataSets\Index.cshtml" />
     <Content Include="Views\Game\Play.cshtml" />
+    <Content Include="Views\Ranking\Index.cshtml" />
+    <Content Include="Views\Ranking\Ranking.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

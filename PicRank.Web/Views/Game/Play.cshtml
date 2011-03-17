@@ -1,4 +1,4 @@
-﻿@model PicRank.Web.Models.GameView
+﻿@model PicRank.Web.Models.MainPicWithList
 @{
     ViewBag.Title = "Play";
 }
@@ -17,7 +17,7 @@
     {
         var item = Model.Pictures[i];
 
-        if (i % 6 == 0)
+        if (i % 4 == 0)
         { 
            @: <div class="picRow">
         }
@@ -28,7 +28,7 @@
             </a>
         </div>
         
-       if( ((i+1)%6 ==0) || i==Model.Pictures.Count-1 ){
+       if( ((i+1)%4 ==0) || i==Model.Pictures.Count-1 ){
         @: </div>
         }
 

@@ -24,7 +24,7 @@ namespace PicRank.Web.Controllers
 
             var pictures = ctx.RandomPictures(1 + 12);
 
-            GameView gameView = new GameView();
+            MainPicWithList gameView = new MainPicWithList();
 
             Game game = new Game();
 

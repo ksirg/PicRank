@@ -9,5 +9,7 @@ namespace PicRank.Web.Models
     {
         public int Id { get; set; }
         public string FullPath { get; set; }
+
+        public double RankingScore { get; set; }
     }
 }

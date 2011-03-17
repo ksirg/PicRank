@@ -28,5 +28,26 @@
 }
 #mainPic 
 {
-    font-size: 2em;
+    /* font-size: 1.4em; */
+}
+
+#main p 
+{
+    font-size:1.2em;
+}
+
+div#title a
+{
+    color:White;
+    text-decoration: none;
+}
+
+.msgBox 
+{
+    
+    background: #efe;
+   
+    font-size: 1.5em;
+   
+    color:#007700;
 }

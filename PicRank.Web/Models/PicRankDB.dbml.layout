@@ -40,7 +40,7 @@
         <elementListCompartment Id="8ee58ec8-0a58-4253-acfe-39e75bb83052" absoluteBounds="10.015, 3.335, 1.9700000000000002, 0.81217754632234573" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 3.93608877316117); (10 : 3.93608877316117)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 3.93608877316117); (10 : 3.93608877316117)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_GameParticipant" />
       <nodes>
         <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />
@@ -53,14 +53,14 @@
         <elementListCompartment Id="803a974a-ee43-4a34-9209-d44b8fe9cb74" absoluteBounds="9.015, 5.835, 1.9700000000000002, 1.0013420010606446" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(10.5 : 5.375); (10.5 : 4.24717754632235)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(10.5 : 5.375); (10.5 : 4.24717754632235)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PicRankDBDataContext/Game/Game_GameParticipant" />
       <nodes>
         <classShapeMoniker Id="655f2c50-5a77-456f-bc30-3766f0172c81" />
         <classShapeMoniker Id="d729bb26-25fa-44dd-a0b9-59e930082197" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 4.7480097736915); (9.46875 : 4.7480097736915); (9.46875 : 5.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 4.7480097736915); (9.46875 : 4.7480097736915); (9.46875 : 5.375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/PicRankDBDataContext/Picture/Picture_Game" />
       <nodes>
         <classShapeMoniker Id="f321ef35-ee10-4d36-9670-c26bf87af1f7" />

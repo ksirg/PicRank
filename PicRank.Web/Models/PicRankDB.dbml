@@ -60,4 +60,15 @@
       <Column Name="FullPath" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.GetPicForRanking" Method="GetPicForRanking">
+    <Parameter Name="picCount" Type="System.Int32" DbType="Int" />
+    <ElementType Name="GetPicForRankingResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FullPath" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="PlayedGames" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SimpleRanking" Method="SimpleRanking">
+    <Return Type="System.Int32" />
+  </Function>
 </Database>
